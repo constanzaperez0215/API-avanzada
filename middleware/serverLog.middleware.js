@@ -1,19 +1,21 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { DateTime } from 'luxon'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export const serverLog = (req, res, next) => {
+  const now = DateTime.now().setZone('America/Santiago')
+
   const log = ({
     path: req.path,
     method: req.method,
     body: req.body,
     params: req.params,
     query: req.query,
-    ruta: req.originalUrl,
-    fecha: new Date().toISOString()
+    fecha: now.toFormat('dd-MM-yyyy HH:mm:ssZZ')
   })
 
   // Convertir el log a una cadena JSON
