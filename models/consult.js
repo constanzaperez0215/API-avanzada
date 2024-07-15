@@ -8,6 +8,26 @@ export const findAll = async ({ limits = 3, orderBy = 'precio_DESC', page = 1 })
   return await db(formattedQuery)
 }
 
-// export const findfilter = async ({  }) => {
-//   return await db('SELECT * FROM inventario ;', [])
-// }
+export const findfilter = async ({ stockMin, stockMax, categoria, metal }) => {
+  const query = 'SELECT * FROM inventario ;'
+  const filtros = []
+  const values = []
+
+  if (stockMin) {
+    
+  }
+
+  if (stockMax) {
+    
+  }
+
+  if (categoria) {
+    
+  }
+
+  if (metal) {
+    
+  }
+  const formattedQuery = format(`${query}`)
+  return await db(formattedQuery)
+}

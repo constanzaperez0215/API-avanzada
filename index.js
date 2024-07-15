@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { findAll } from './models/consult.js'
+import { findAll, findfilter } from './models/consult.js'
 
 dotenv.config()
 
@@ -18,14 +18,13 @@ app.get('/joyas', async (req, res) => {
   }
 })
 
-// app.get('/joyas/filtros', async (req, res) => {
-//   const { orderBy } = req.query
-//   try {
-//     const filtros = await findFilter({ orderBy })
-//     res.status(200).json(filtros)
-//   } catch (error) {
-//     res.status(500).json({ status: false, message: 'No se pudo realizar la consulta filtros' })
-//   }
-// })
+app.get('/joyas/filtros', async (req, res) => {
+  try {
+    const filtros = await findfilter(req.query)
+    res.status(200).json(filtros)
+  } catch (error) {
+    res.status(500).json({ status: false, message: 'No se pudo realizar la consulta filtros' })
+  }
+})
 
 app.listen(process.env.PORT ?? 3000, () => console.log('Puerto conectado!'))
