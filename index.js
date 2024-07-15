@@ -23,6 +23,7 @@ app.get('/joyas/filtros', async (req, res) => {
     const filtros = await findfilter(req.query)
     res.status(200).json(filtros)
   } catch (error) {
+    console.error('Error en /filtros', error)
     res.status(500).json({ status: false, message: 'No se pudo realizar la consulta filtros' })
   }
 })

@@ -8,26 +8,34 @@ export const findAll = async ({ limits = 3, orderBy = 'precio_DESC', page = 1 })
   return await db(formattedQuery)
 }
 
-export const findfilter = async ({ stockMin, stockMax, categoria, metal }) => {
-  const query = 'SELECT * FROM inventario ;'
+export const findfilter = async ({ precio_max,  precio_min, categoria, metal }) => {
+  let query = 'SELECT * FROM inventario '
   const filtros = []
   const values = []
 
-  if (stockMin) {
-    
+  if (precio_max) {
+    values.push(precio_max)
+    filtros.push(`precio <= $${values.length}`)
   }
 
-  if (stockMax) {
-    
+  if (precio_min) {
+    values.push(precio_min)
+    filtros.push(`precio >= $${values.length}`)
   }
 
   if (categoria) {
-    
+    values.push(categoria)
+    filtros.push(`categoria = $${values.length}`)
   }
 
   if (metal) {
-    
+    values.push(metal)
+    filtros.push(`metal = $${values.length}`)
   }
-  const formattedQuery = format(`${query}`)
-  return await db(formattedQuery)
+
+  if (filtros.length > 0) {
+    query += ` WHERE ${filtros.join(' AND ')}`
+  }
+
+  return await db(query, values)
 }
