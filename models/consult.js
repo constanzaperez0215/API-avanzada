@@ -39,3 +39,7 @@ export const findFilter = async ({ precio_max,  precio_min, categoria, metal }) 
 
   return await db(query, values)
 }
+
+export const joyasId = async (id) => {
+  await db('SELECT * FROM inventario WHERE id = $1', [id])
+}

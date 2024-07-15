@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { findAll, findFilter } from './models/consult.js'
+import { findAll, findFilter, joyasId } from './models/consult.js'
 import { prepararHATEOAS } from './hateodas/hateodas.js'
 
 dotenv.config()
@@ -8,6 +8,18 @@ dotenv.config()
 const app = express()
 
 app.get('/', (_, res) => res.status(200).send('Conectados al servidor!'))
+
+app.get('/joyas/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    // He aquí el error!!
+    const datos = await joyasId(id)
+    res.status(200).json(datos)
+  } catch (error) {
+    console.error('Error en /filtros', error)
+    res.status(500).json({ status: false, message: 'No se pudo realizar la consulta id' })
+  }
+})
 
 app.get('/joyas', async (req, res) => {
   try {
