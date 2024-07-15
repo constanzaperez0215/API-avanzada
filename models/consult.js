@@ -8,7 +8,7 @@ export const findAll = async ({ limits = 3, orderBy = 'precio_DESC', page = 1 })
   return await db(formattedQuery)
 }
 
-export const findfilter = async ({ precio_max,  precio_min, categoria, metal }) => {
+export const findFilter = async ({ precio_max,  precio_min, categoria, metal }) => {
   let query = 'SELECT * FROM inventario '
   const filtros = []
   const values = []
